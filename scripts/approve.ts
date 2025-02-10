@@ -18,7 +18,7 @@ const approveProject = async (votes: number, projectId: string) => {
 
   tx.moveCall({
     target: `${packageId}::${moduleName}::${functionName}`,
-    arguments: [tx.pure.u8(votes), tx.object(projectId)],
+    arguments: [tx.object(ADMIN_CAP), tx.pure.u8(votes), tx.object(projectId)],
   });
 
   try {

@@ -31,17 +31,17 @@ module dao_sui::dao_sui {
 
     }
 
-    // public struct AdminCap has key, store {
-    //     id:UID
-    // }
+    public struct AdminCap has key, store {
+        id:UID
+    }
 
-    // public fun add_admin(_:&AdminCap, new_admin:address, ctx:&mut TxContext) {
-    //     let admin = AdminCap{
-    //         id:object::new(ctx)
-    //     };
-    //     transfer::public_transfer(admin, new_admin);
+    public fun add_admin(_:&AdminCap, new_admin:address, ctx:&mut TxContext) {
+        let admin = AdminCap{
+            id:object::new(ctx)
+        };
+        transfer::public_transfer(admin, new_admin);
         
-    // }
+    }
 
     // public struct ApproverCap has key {
     //     id:UID
@@ -49,12 +49,12 @@ module dao_sui::dao_sui {
 
     //user functions
 
-    //  fun init(ctx:&mut TxContext) {
-    //     let admin =  AdminCap{
-    //         id:object::new(ctx)
-    //     };
-    //     transfer::transfer(admin, ctx.sender());
-    // }
+     fun init(ctx:&mut TxContext) {
+        let admin =  AdminCap{
+            id:object::new(ctx)
+        };
+        transfer::transfer(admin, ctx.sender());
+    }
 
     public fun submit_project(description:vector<u8>,fee: Coin<SUI>,ctx:&mut TxContext) {
 
@@ -79,7 +79,7 @@ module dao_sui::dao_sui {
 
     }
 
-    public fun approve_project(votes:u8, project:&mut Project) {
+    public fun approve_project(_:&AdminCap,votes:u8, project:&mut Project) {
 
         project.approvals = votes;
         project.approved = project.approvals >= APPROVALS_THRESHOLD;
